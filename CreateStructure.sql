@@ -1,0 +1,23 @@
+CREATE TABLE dbo.SKU (
+  ID INT IDENTITY PRIMARY KEY,
+  Code VARCHAR(255) UNIQUE,
+  Name VARCHAR(255)
+);
+
+CREATE TABLE dbo.Family (
+  ID INT IDENTITY PRIMARY KEY,
+  SurName VARCHAR(255),
+  BudgetValue DECIMAL(18, 2)
+);
+
+CREATE TABLE dbo.Basket (
+  ID INT IDENTITY PRIMARY KEY,
+  ID_SKU INT,
+  ID_Family INT,
+  Quantity INT CHECK (Quantity >= 0),
+  Value DECIMAL(18, 2) CHECK (Value >= 0),
+  PurchaseDate DATE DEFAULT GETDATE(),
+  DiscountValue DECIMAL(18, 2),
+  FOREIGN KEY (ID_SKU) REFERENCES dbo.SKU(ID),
+  FOREIGN KEY (ID_Family) REFERENCES dbo.Family(ID)
+);
